@@ -18,9 +18,7 @@ gulp.task('default', ['styles', 'lint'], function() {
 
 gulp.task('lint', function(){
   return gulp.src(['js/**/*.js'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError());
+
 });
 
 gulp.task('styles', function(done) {
