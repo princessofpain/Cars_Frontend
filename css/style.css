@@ -37,7 +37,8 @@ html, body {
 
 #matchfield {
   //background-color: #f7f9ef;
-  margin: 50px 10px;
+  margin: 35px 10px 15px;
+  display: inline-grid;
 }
 
 #myStack {
@@ -69,6 +70,7 @@ html, body {
   grid-column: 2;
   justify-self: center;
   align-self: center;
+  z-index: 2;
 }
 
 #play-button {
@@ -83,6 +85,7 @@ html, body {
   grid-column: 2;
   grid-row: 2;
   justify-self: center;
+  align-self: center;
 }
 
 #next-button {
