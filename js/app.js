@@ -23,6 +23,12 @@ $(function(){
     getActiveCard: function() {
       return activeCard;
     },
+
+    determineTheWinner: function(myCard, opponentsCard) {
+      //call API to compare cards
+      const winner = myCard;
+      controller.showWinner(winner, myCard, opponentsCard);
+    }
   };
 
   var controller = {
@@ -45,7 +51,14 @@ $(function(){
       model.saveActiveCard(target);
     },
 
-    determineTheWinner: function(myCard, opponentsCard) {}
+    determineTheWinner: function(myCard, opponentsCard) {
+      model.determineTheWinner(myCard, opponentsCard);
+    },
+
+    showWinner: function(winner, myCard, opponentsCard) {
+      view.handleWinner(winner, myCard, opponentsCard);
+    }
+
   };
 
   var view = {
@@ -115,8 +128,23 @@ $(function(){
       const myCard = $('#matchfield').first();
       const opponentsCard = $('#matchfield').last();
       controller.determineTheWinner(myCard, opponentsCard);
-    }
+    },
 
+    handleWinner: function(winner, myCard, opponentsCard) {
+      if(winner === myCard) {
+        const me = $('#my-points');
+        view.addPointsTo(me);
+      } else {
+        const opponent = $('#opponents-points');
+        view.addPontsTo(opponent);
+      }
+    },
+
+    addPointsTo: function(winner) {
+      let points = winner.text();
+      points++;
+      winner.text(points);
+    },
    };
 
   controller.init();
