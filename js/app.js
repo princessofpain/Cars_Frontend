@@ -1,6 +1,6 @@
 $(function(){
 
-  var model = {
+  const model = {
     // fetch data from API
     getCards: function() {
       const cards = [
@@ -31,7 +31,7 @@ $(function(){
     }
   };
 
-  var controller = {
+  const controller = {
     init: function() {
       view.init();
     },
@@ -61,7 +61,7 @@ $(function(){
 
   };
 
-  var view = {
+  const view = {
     init: function() {
       for(let i = 0; i < 6; i++) {
         $('#myStack').append(`<div class="card" id=${i}></div>`);
@@ -118,9 +118,8 @@ $(function(){
     opponentPlays: function() {
       setTimeout(function() {
         $('#matchfield').append(`<div class='card'></div>`);
-        $('#matchfield').children().css('justify-self', 'center');
-        view.setTheWinner();
         $('#next-button').css('display', 'block');
+        view.setTheWinner();
       }, 1000);
     },
 
@@ -136,7 +135,7 @@ $(function(){
         view.addPointsTo(me);
       } else {
         const opponent = $('#opponents-points');
-        view.addPontsTo(opponent);
+        view.addPointsTo(opponent);
       }
     },
 
@@ -144,7 +143,22 @@ $(function(){
       let points = winner.text();
       points++;
       winner.text(points);
+
+      view.checkRemainingCards();
     },
+
+    checkRemainingCards: function() {
+      const remainingCards = $('#myStack').children().length;
+
+      if(remainingCards === 0) {
+        console.log("zero cards left");
+        $('#next-button').css('display', 'none');
+        $('#play-button').css('display', 'none');
+        $('#opponentsCards').css('display', 'none');
+        $('#game').append(`<div id="finish-game"><button id="finish-button">Finish Game</button></div>`);
+      }
+    }
+
    };
 
   controller.init();

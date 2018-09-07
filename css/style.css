@@ -11,7 +11,7 @@ html, body {
   background-color: #063718;
   display: grid;
   grid-template-columns: 1.8fr 0.7fr 0.5fr;
-  grid-template-rows: 85% 15%%;
+  grid-template-rows: 540px 70px;
 }
 
 .mainHeading {
@@ -36,9 +36,10 @@ html, body {
 }
 
 #matchfield {
-  //background-color: #f7f9ef;
   margin: 35px 10px 15px;
-  display: inline-grid;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 #myStack {
@@ -95,6 +96,21 @@ html, body {
   padding: 4px 10px;
   font-weight: bold;
   display: none;
+}
+
+#finish-button {
+  border-radius: 10px;
+  font-family: arial, sans-serif;
+  font-size: 12pt;
+  padding: 4px 10px;
+  font-weight: bold;
+}
+
+#finish-game {
+  grid-row: 2;
+  grid-column: 2;
+  justify-self: center;
+  align-self: center;
 }
 
 #myPoints {
