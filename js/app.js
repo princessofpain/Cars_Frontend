@@ -55,10 +55,9 @@ $(function(){
       model.determineTheWinner(myCard, opponentsCard);
     },
 
-    showWinner: function(winner, myCard, opponentsCard) {
+    showWinner(winner, myCard, opponentsCard) {
       view.handleWinner(winner, myCard, opponentsCard);
     }
-
   };
 
   const view = {
@@ -75,6 +74,10 @@ $(function(){
       $('#opponentsCards').click(function() {
         alert("This are not your cards!");
       });
+
+      $('#myCards').css('display', 'block');
+      $('#matchfield').css('display', 'flex');
+      $('#finish-message').remove();
 
       controller.getCards();
     },
@@ -151,12 +154,39 @@ $(function(){
       const remainingCards = $('#myStack').children().length;
 
       if(remainingCards === 0) {
-        console.log("zero cards left");
         $('#next-button').css('display', 'none');
         $('#play-button').css('display', 'none');
         $('#opponentsCards').css('display', 'none');
-        $('#game').append(`<div id="finish-game"><button id="finish-button">Finish Game</button></div>`);
+        $('#myPoints').css('display', 'none');
+        $('#opponentsPoints').css('display', 'none');
+
+        setTimeout(function() {
+          $('#matchfield').children().remove();
+          view.addWinnerMessage();
+        }, 2500);
       }
+    },
+
+    addWinnerMessage: function() {
+      const myPoints = $('#my-points').text();
+      const opponentsPoints = $('#opponents-points').text();
+      const result = view.evaluatePoints(myPoints, opponentsPoints);
+
+      $('#game').append(`<div id="finish-message" style={{  background-image: 'img/background_win';}}><p>You have ${myPoints} points and your opponent has ${opponentsPoints} points. ${result}</p></div>`);
+    },
+
+    evaluatePoints: function(myPoints, opponentsPoints) {
+      let result;
+
+      if(myPoints > opponentsPoints) {
+        result = "You win!";
+      } else if(myPoints == opponentsPoints) {
+        result = "You are equal.";
+      } else {
+        result = "You lose...";
+      }
+
+      return result;
     }
 
    };

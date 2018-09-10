@@ -98,19 +98,24 @@ html, body {
   display: none;
 }
 
-#finish-button {
-  border-radius: 10px;
+#finish-message {
+  grid-row: 1;
+  grid-column: 1 / span 3;
+  font-size: 16pt;
+  font-family: arial, sans-serif;
+  font-weight: bold;
+  justify-self: center;
+  align-self: center;
+  color: white;
+}
+
+#finish-link {
+  color: black;
   font-family: arial, sans-serif;
   font-size: 12pt;
   padding: 4px 10px;
   font-weight: bold;
-}
-
-#finish-game {
-  grid-row: 2;
-  grid-column: 2;
-  justify-self: center;
-  align-self: center;
+  text-decoration: none;
 }
 
 #myPoints {
