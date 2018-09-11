@@ -66,6 +66,7 @@ $(function(){
         $('#myStack').append(`<div class="card" id=${i}></div>`);
       }
 
+      $('#new-button').click(view.startNewGame);
       $('#play-button').click(view.playCard);
       $('#next-button').click(view.setUpNewRound);
       $('#myStack').children().click(function(e) {
@@ -84,17 +85,16 @@ $(function(){
 
     playCard: function() {
       const roundIsActive = $('#matchfield').children().length;
+      const cardId = controller.getActiveCard();
 
-      if(roundIsActive === 0) {
-        const cardId = controller.getActiveCard();
-        const activeCardDom = $(`.${cardId}`);
+      if(roundIsActive === 0 && cardId !== '') {
+        $("#startRound").css('display', 'none');
         $('#matchfield').children().remove();
 
-        $('#matchfield').append(`<div class='card' id=${cardId}></div>`);
-        $('#matchfield.card').append(activeCardDom);
-        $('#matchfield').children().css('justify-self', 'center');
         $(`#myStack>#${cardId}`).remove();
-        $("#play-button").css('display', 'none');
+
+        $('#matchfield').append(`<div class='card' id=${cardId}></div>`);
+
         const emptyCard = '';
         controller.saveActiveCard(emptyCard);
       }
@@ -104,8 +104,8 @@ $(function(){
 
     setUpNewRound: function() {
       $('#matchfield').children().remove();
-      $('#next-button').css('display', 'none');
-      $('#play-button').css('display', 'block');
+      $('#next').css('display', 'none');
+      $('#startRound').css('display', 'block');
     },
 
     highlightActiveCard: function(e) {
@@ -121,7 +121,7 @@ $(function(){
     opponentPlays: function() {
       setTimeout(function() {
         $('#matchfield').append(`<div class='card'></div>`);
-        $('#next-button').css('display', 'block');
+        $('#next').css('display', 'block');
         view.setTheWinner();
       }, 1000);
     },
@@ -154,14 +154,15 @@ $(function(){
       const remainingCards = $('#myStack').children().length;
 
       if(remainingCards === 0) {
-        $('#next-button').css('display', 'none');
-        $('#play-button').css('display', 'none');
+        $('#next').css('display', 'none');
+        $('#startRound').css('display', 'none');
         $('#opponentsCards').css('display', 'none');
         $('#myPoints').css('display', 'none');
         $('#opponentsPoints').css('display', 'none');
 
         setTimeout(function() {
           $('#matchfield').children().remove();
+          $('#newGame').css('display', 'block');
           view.addWinnerMessage();
         }, 2500);
       }
@@ -187,9 +188,31 @@ $(function(){
       }
 
       return result;
-    }
+    },
 
-   };
+    startNewGame: function() {
+
+      view.removeEventListeners();
+      view.init();
+
+      $('#opponentsCards').css('display', 'block');
+      $('#startRound').css('display', 'block');
+      $('#myPoints').css('display', 'block');
+      $('#my-points').html("0");
+      $('#opponentsPoints').css('display', 'block');
+      $('#opponents-points').html("0");
+
+      $('#newGame').css('display', 'none');
+    },
+
+    removeEventListeners: function() {
+      $('#new-button').unbind('click');
+      $('#play-button').unbind('click');
+      $('#next-button').unbind('click');
+      $('#myStack').unbind('click');
+      $('#opponentsCards').unbind('click');
+    }
+  };
 
   controller.init();
 });
